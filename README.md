@@ -1,68 +1,77 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# React Spring
 
-## Available Scripts
+Baseado no principio de mola, não tem uma duração envolvida ou curva, um pouco diferente das medidas usadas geralmente nas animações, os movimentos na vida real não acontecem sobre curvas de tempo e duração
 
-In the project directory, you can run:
+arbitrary curves, easings, time waterfalls, not to mention getting this all in sync
 
-### `npm start`
+Como Andy Matuschak (ex-desenvolvedor da Apple UI-Kit) expressou isso uma vez: APIs de animação parametrizadas por duração e curva são fundamentalmente opostas à interatividade contínua e fluida.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Fisica de mola
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+Baseado em animated e react-motion
 
-### `npm test`
+Interpolações, perfomance do animated, declarativo
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+suporte: web, react-native, react-native-web
 
-### `npm run build`
+### Hooks Api
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Existem 5 hooks
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+useSpring: uma unica e simples animação de mola de um ponto A ou ponto B (Mudanças de propriedades de A até B)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+useSprings: multiplas animações, para listas, onde executa um animação de A até B para cada item da lista
 
-### `npm run eject`
+useTrail:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+useTransition: transições para montagem de componentes e desmontagem
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+useChain: Uma fila ou encadeamento de animações
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Necessario sempre usar o animated.div por razões de performance
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Existem palavras reservadas para o objeto de parametro. (from, to, config, delay, onStart)
 
-## Learn More
+Sendo ele universal pode ser usado com React-native, componentes personalizados
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```javascript
+// React components
+const AnimatedDonut = animated(Donut);
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+// React-native
+const AnimatedView = animated(View);
+```
 
-### Code Splitting
+Exemplos de uso
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+1.Opacity Heigth(-32px)
 
-### Analyzing the Bundle Size
+2.SVG
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+3.Number(Pode ser uma calculadora)
 
-### Making a Progressive Web App
+Existe a possibilidade de interpolação de animações
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+Exemplo com [react-measure](https://github.com/souporserious/react-measure).
 
-### Advanced Configuration
+```jsx
+const [bind, { height }] = useMeasure();
+const props = useSpring({ height });
+return (
+  <animated.div style={{ overflow: 'hidden', ...props }}>
+    <div {...bind}>content</div>
+  </animated.div>
+);
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+##### Config
 
-### Deployment
+mass, tension, friction, velocity, duration
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+##### Presets
 
-### `npm run build` fails to minify
+default, gentle, wobbly, stiff, slow, molasses
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+##### Properties
+
+from, to, delay, config, onStart
